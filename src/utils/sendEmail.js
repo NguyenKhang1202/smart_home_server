@@ -1,0 +1,27 @@
+const nodemailer = require('nodemailer');
+const { emailConfig } = require('../config');
+
+const { emailUser, emailPassword } = emailConfig;
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      emailUser,
+      emailPassword
+    },
+    tls: {
+        rejectUnauthorized: false,
+    }
+  });
+
+const sendEmail = async (to, subject, text, content) => {
+    return await transporter.sendMail({
+        from: emailUser,
+        to,
+        subject,
+        text,
+        html: `<b>${content}</b>`,
+    })
+};
+
+module.exports = { sendEmail };

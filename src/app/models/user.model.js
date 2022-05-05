@@ -1,17 +1,19 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-	name: {
+	username: {
 		type: String,
 		required: true,
 		min: 6,
 		max: 30,
+		unique: true
 	},
 	email: {
 		type: String,
 		required: true,
 		max: 255,
 		min: 6,
+		unique: true
 	},
 	password: {
 		type: String,
@@ -24,11 +26,29 @@ const userSchema = new mongoose.Schema({
 		enum: ['admin', 'customer'],
 		default: 'customer',
 	},
-	password: {
+	fullName: {
 		type: String,
 		required: true,
-		max: 128,
-		min: 6,
+	},
+	phoneNumber: {
+		type: String,
+		required: false,
+		max: 15,
+		min: 8,
+		default: '',
+	},
+	address: {
+		type: String,
+		default: '',
+		required: false,
+	},
+	dateOfBirth: {
+		type: Date,
+		required: false,
+	},
+	listRooms: {
+		type: Array,
+		default: [],
 	},
 	createdDate: {
 		type: Date,
@@ -38,6 +58,8 @@ const userSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
+},{
+    timestamps: true
 });
 
 module.exports = mongoose.model('User', userSchema);
