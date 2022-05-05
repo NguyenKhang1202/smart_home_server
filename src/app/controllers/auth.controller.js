@@ -55,15 +55,14 @@ const forgetPasswordUser = async (req, res, next) => {
   const verifyCode = nanoid();
   const verifyLink = `http://localhost:${port}/auth/user/verify-code?email=${email}&code=${verifyCode}`;
   globalCache.set(`user:${email}`, verifyCode, '1000');
-
   await sendEmail(email, 'Forget password on Smart Home', 'Click this link to verify', verifyLink);
   return res.status(200).json(apiResponse({ status: APIStatus.SUCCESS, msg: 'Check your email to get the verify link' }))
 }
 
 const verifyCodeUser = async (req, res, next) => {
   const { email, code } = req.query;
-
   const realCode = globalCache.get(`user:${email}`)
+  console.log(realCode)
   if (realCode !== code) return res.status(400).json(apiResponse({ status: APIStatus.FAIL, msg: 'Invalid code' }))
 
   const newPassword = nanoid(8)

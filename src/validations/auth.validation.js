@@ -18,8 +18,6 @@ const registerValidation = {
 // Validate login user
 const loginValidation = {
 	body: Joi.object({
-		// password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{6,128}$')),
-		// email: Joi.string().min(6).email(),
 		username: Joi.string().required(),
     	password: Joi.string().required()
 	})
