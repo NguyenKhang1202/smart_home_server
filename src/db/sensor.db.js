@@ -3,9 +3,9 @@ const Sensor = require("../app/models/sensor.model.js");
 // Get one sensor
 const getSensorDb = async (query) => {
   const sensors = await Sensor.findOne(query).sort({
-    _id: -1,
+    _id: -1, // mới nhất đến cũ nhất
   });
-  console.log(sensors);
+  // console.log(sensors);
   return {
     sensors,
   };

@@ -5,6 +5,7 @@ const roomRouter = require("./room.route");
 const deviceRouter = require("./device.route");
 const subscriberRouter = require("./subscriber.route");
 const sensorRouter = require("./sensor.route");
+const meterPowerRouter = require("./meterPower.route");
 
 //Index of route middleware
 const route = (app) => {
@@ -28,6 +29,9 @@ const route = (app) => {
 
   // Route sensor
   app.use("/api/v1/sensors", sensorRouter);
+
+  // Route meter_power
+  app.use("/api/v1/meter-powers", meterPowerRouter);
 };
 
 module.exports = route;

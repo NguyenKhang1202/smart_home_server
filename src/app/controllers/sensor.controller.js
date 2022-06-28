@@ -59,9 +59,9 @@ const getDataSensor = async (req, res, next) => {
 
 // insert 1 data
 const insertDataSensor = async (req, res, next) => {
-  //   const { humidityAir, temperature } = req.body;
-  const humidityAir = Math.floor(Math.random() * (100 - 80 + 1) + 80);
-  const temperature = Math.floor(Math.random() * (30 - 15 + 1) + 15);
+  const { humidityAir, temperature } = req.body;
+  // const humidityAir = Math.floor(Math.random() * (100 - 80 + 1) + 80);
+  // const temperature = Math.floor(Math.random() * (30 - 15 + 1) + 15);
   // kiểm tra subscriber đã có chưa
 
   const rs = await insertDataSensorDb({ humidityAir, temperature });
