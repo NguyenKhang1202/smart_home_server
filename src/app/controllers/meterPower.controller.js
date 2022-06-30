@@ -5,7 +5,8 @@ const MeterPower = require("../models/meter_power.model");
 const ObjectId = require("mongoose").Types.ObjectId;
 
 const createMeterPower = async (req, res, next) => {
-  const meter_power = await new MeterPower(req.body).save();
+  const userId = req.user._id;
+  const meter_power = await new MeterPower({ userId, ...req.body }).save();
   if (meter_power) {
     return res
       .status(200)
@@ -97,7 +98,7 @@ const createMeterPower = async (req, res, next) => {
 // Lấy về điên năng các tháng trong năm
 const getAllMonInYear = async (req, res) => {
   const userId = req.user._id;
-  const dateBody = req.body;
+  const dateBody = req.params.year;
   console.log("dateBody", dateBody); // "year": "2022"
   try {
     var pipeline = [
@@ -126,7 +127,7 @@ const getAllMonInYear = async (req, res) => {
       {
         $match: {
           userId: new ObjectId(userId),
-          ...dateBody,
+          year: dateBody,
         },
       },
       {
@@ -135,6 +136,11 @@ const getAllMonInYear = async (req, res) => {
           totalActivePower: {
             $sum: "$activePower",
           },
+        },
+      },
+      {
+        $sort: {
+          _id: 1,
         },
       },
     ];
@@ -169,6 +175,7 @@ const getAllStatistics = async (req, res) => {
   const filter = req.params.filter;
   const dateTime = req.params.dateTime;
   let data = JSON.parse(`{"${filter}": "${dateTime}"}`);
+  console.log(data);
   try {
     var pipeline = [
       {
@@ -199,6 +206,21 @@ const getAllStatistics = async (req, res) => {
           ...data,
         },
       },
+      {
+        $sort: {
+          dateTime: 1,
+        },
+      },
+      // {
+      //   $project: {
+      //     date: {
+      //       $dateFromString: {
+      //         dateString: "$data",
+      //       },
+      //     },
+      //     // activePower,
+      //   },
+      // },
     ];
 
     MeterPower.aggregate(pipeline).exec((err, listMeter) => {
@@ -286,8 +308,6 @@ const getAllStatistics = async (req, res) => {
 
 module.exports = {
   createMeterPower,
-  getMeterPowerByDay,
   getAllMonInYear,
   getAllStatistics,
-  // editMeterPower,
 };

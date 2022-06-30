@@ -11,8 +11,8 @@ const {
 } = require("../app/controllers/MeterPower.controller");
 
 //
+router.get("/MonthInYear/:year", authUser, asyncWrap(getAllMonInYear)); // get all month in year
 router.get("/:filter/:dateTime", authUser, asyncWrap(getAllStatistics)); // params : filter (day, month or year) , tính theo day
-router.get("/MonthInYear", authUser, asyncWrap(getAllMonInYear)); // get all month in year
 router.post("/", authUser, asyncWrap(createMeterPower)); // create new meter power
 // router.patch("/:dateTime", authUser, asyncWrap(editMeterPower)); // increase activePower
 
