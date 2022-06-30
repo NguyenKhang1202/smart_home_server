@@ -4,18 +4,16 @@ const asyncWrap = require("../utils/asyncWrap");
 const { validate } = require("express-validation");
 // const { createMeterPowerValidation } = require('../validations/MeterPower.validation');
 const {
-  getMeterPower,
-  getAllMeterPowers,
   createMeterPower,
-  deleteMeterPower,
-  editMeterPower,
+  // editMeterPower,
+  getAllStatistics,
+  getAllMonInYear,
 } = require("../app/controllers/MeterPower.controller");
 
-// Get all MeterPowers in house
-router.get("/", authUser, asyncWrap(getAllMeterPowers));
-router.get("/:id", authUser, asyncWrap(getMeterPower));
-router.post("/", authUser, asyncWrap(createMeterPower));
-router.delete("/:id", authUser, asyncWrap(deleteMeterPower));
-router.patch("/:id", authUser, asyncWrap(editMeterPower));
+//
+router.get("/:filter/:dateTime", authUser, asyncWrap(getAllStatistics)); // params : filter (day, month or year) , tính theo day
+router.get("/MonthInYear", authUser, asyncWrap(getAllMonInYear)); // get all month in year
+router.post("/", authUser, asyncWrap(createMeterPower)); // create new meter power
+// router.patch("/:dateTime", authUser, asyncWrap(editMeterPower)); // increase activePower
 
 module.exports = router;
