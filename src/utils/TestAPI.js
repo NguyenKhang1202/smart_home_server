@@ -3,7 +3,7 @@
 const axios = require("axios");
 const moment = require("moment");
 
-var date_string = "2022-07";
+var date_string = "2021-06";
 function getDaysArrayByMonth() {
   var daysInMonth = moment(date_string, "YYYY-MM").daysInMonth();
   var arrDays = [];

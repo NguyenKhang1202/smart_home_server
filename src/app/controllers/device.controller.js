@@ -97,7 +97,7 @@ const editDevice = async (req, res, next) => {
   const rs = await editDeviceDb({ _id, status });
   const device = await getDeviceDb({ _id });
   const message = {
-    // deviceId: device.deviceId,
+    deviceId: device.deviceId,
     status,
   };
   if (rs) {
@@ -128,7 +128,7 @@ async function getMeterPowerByDay(status, userId, device) {
       // thực hiện tăng điện tăng
       let d = new Date();
       let milliseconds = d.getTime() - device.startTime.getTime();
-      let hours = milliseconds / (1000 * 60 * 60);
+      let hours = milliseconds / 1000;
       let numPower = Math.round(device.wattage * hours);
       meter_power.activePower += numPower;
       await meter_power.save();
